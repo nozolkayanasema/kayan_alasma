@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نُزل كيان العاصمة للشقق المفروشة</title>
+    <!-- Font Awesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #d4af37;
+            --accent-hover: #b89628;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --radius: 12px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-title i {
+            color: var(--accent);
+            font-size: 1.8rem;
+        }
+
+        .logo-title h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .search-bar {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+            margin-bottom: 2.5rem;
+            border-top: 4px solid var(--accent);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .btn-search {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-search:hover {
+            background: var(--accent-hover);
+            color: white;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .slide-img.active {
+            display: block;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--accent);
+            border: none;
+            padding: 1rem 1.2rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .slider-btn:hover {
+            background: var(--primary);
+        }
+
+        .slider-btn.prev { right: 15px; }
+        .slider-btn.next { left: 15px; }
+
+        .property-details {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+        }
+
+        .gallery-thumbs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-thumbs img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .gallery-thumbs img:hover, .gallery-thumbs img.active {
+            opacity: 1;
+            border: 2px solid var(--accent);
+        }
+
+        .apartment-specs {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .spec-item i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .booking-flow {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+        }
+
+        .step-panel { display: none; }
+        .step-panel.active { display: block; }
+
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .unit-card {
+            border: 2px solid #e2e8f0;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .unit-card:hover, .unit-card.selected {
+            border-color: var(--accent);
+            background-color: #fefce8;
+        }
+
+        .unit-card small {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+
+        .btn-step {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-step:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .unit-preview-box {
+            display: none;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .unit-preview-box.active { display: block; }
+
+        .preview-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 0.5rem;
+        }
+
+        .preview-images-grid img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .bank-transfer-box {
+            display: none;
+            grid-column: 1 / -1;
+            background: #fefce8;
+            border: 2px dashed var(--accent);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .bank-transfer-box.active {
+            display: block;
+        }
+
+        .qr-code-img {
+            width: 170px;
+            height: 170px;
+            margin: 1rem auto;
+            border: 4px solid var(--primary);
+            border-radius: 10px;
+            padding: 5px;
+            background: white;
+            display: block;
+        }
+
+        .page-qr-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-share-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.4rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-share-whatsapp:hover {
+            background-color: #1eb854;
+        }
+
+        .iban-code {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: inline-block;
+            direction: ltr;
+            margin-top: 0.5rem;
+        }
+
+        .info-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .faq-card, .map-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            border: 0;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        .btn-whatsapp-direct {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn-whatsapp-direct:hover {
+            background-color: #1eb854;
+        }
+
+        @media (max-width: 768px) {
+            .info-section { grid-template-columns: 1fr; }
+            .slider-container { height: 260px; }
+            header { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-title">
+            <i class="fa-solid fa-building"></i>
+            <h1>نُزل كيان العاصمة للشقق المفروشة</h1>
+        </div>
+        <nav>
+            <a href="#details">التفاصيل</a>
+            <a href="#booking">الحجز</a>
+            <a href="#faq">الأسئلة الشائعة</a>
+            <a href="#contact">التواصل</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="form-group">
+                <label>نوع الشقة</label>
+                <select>
+                    <option>شقة فاخرة (3 غرف + 3 حمامات + مطبخ)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Check-in Date</label>
+                <input type="date" id="checkInDate" lang="en">
+            </div>
+            <div class="form-group">
+                <label>Check-out Date</label>
+                <input type="date" id="checkOutDate" lang="en">
+            </div>
+            <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> بحث عن المتاح</button>
+        </div>
+
+        <!-- Property Details & Hero Image Carousel -->
+        <section id="details" class="property-details">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;" id="apartmentTitle">معرض الصور الرئيسية</h2>
+            
+            <div class="slider-container" id="sliderContainer">
+                <button class="slider-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-right"></i></button>
+                <button class="slider-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-left"></i></button>
+                
+                <img class="slide-img active" src="Code_Generated_Image (15).jpg" alt="مدخل الشقة والممر">
+                <img class="slide-img" src="WhatsApp Image 2026-08-22 at 20.05.12 (3).jpeg" alt="غرفة نوم ثلاثية مع التكييف">
+                <img class="slide-img" src="Code_Generated_Image (13).jpg" alt="دورة المياه الرخامية">
+                <img class="slide-img" src="WhatsApp Image 2026-08-22 at 20.05.13.jpeg" alt="غرفة أسرة مزدوجة مع جلسة جدارية">
+                <img class="slide-img" src="Code_Generated_Image (12).jpg" alt="غرفة نوم واسعة ثلاثية">
+                <img class="slide-img" src="Code_Generated_Image (9).jpg" alt="جناح غرف نوم متعدد">
+                <img class="slide-img" src="Code_Generated_Image (8).jpg" alt="غرفة أسرة مفروشة">
+                <img class="slide-img" src="Code_Generated_Image (7).jpg" alt="حمام رخامي مودرن">
+                <img class="slide-img" src="Code_Generated_Image (1).jpg" alt="غرفة أسرة ثلاثية فاخرة">
+            </div>
+
+            <div class="gallery-thumbs" id="thumbsContainer">
+                <img src="Code_Generated_Image (15).jpg" onclick="setSlide(0)" class="active">
+                <img src="WhatsApp Image 2026-08-22 at 20.05.12 (3).jpeg" onclick="setSlide(1)">
+                <img src="Code_Generated_Image (13).jpg" onclick="setSlide(2)">
+                <img src="WhatsApp Image 2026-08-22 at 20.05.13.jpeg" onclick="setSlide(3)">
+                <img src="Code_Generated_Image (12).jpg" onclick="setSlide(4)">
+                <img src="Code_Generated_Image (9).jpg" onclick="setSlide(5)">
+                <img src="Code_Generated_Image (8).jpg" onclick="setSlide(6)">
+                <img src="Code_Generated_Image (7).jpg" onclick="setSlide(7)">
+                <img src="Code_Generated_Image (1).jpg" onclick="setSlide(8)">
+            </div>
+
+            <div class="apartment-specs">
+                <div class="spec-item"><i class="fa-solid fa-bed"></i> 3 غرف نوم مفروشة</div>
+                <div class="spec-item"><i class="fa-solid fa-bath"></i> 3 حمامات مودرن</div>
+                <div class="spec-item"><i class="fa-solid fa-kitchen-set"></i> مطبخ متكامل</div>
+                <div class="spec-item"><i class="fa-solid fa-wifi"></i> إنترنت سريع مجاني</div>
+            </div>
+            <p style="color: var(--text-light);">تمتع بإقامة مريحة في نُزل كيان العاصمة. شققنا المفروشة بالكامل تقدم لك أفضل مستويات الفخامة والراحة القريبة من كافة الخدمات والأسوق التجارية بمكة المكرمة.</p>
+            
+            <a href="https://wa.me/966508269006?text=السلام%20عليكم،%20أود%20الاستفسار%20عن%20حجز%20شقة%20في%20نُزل%20كيان%20العاصمة" class="btn-whatsapp-direct" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> حجز سريع عبر الواتساب (0508269006)
+            </a>
+        </section>
+
+        <!-- Booking Flow -->
+        <section id="booking" class="booking-flow">
+            <!-- Step 1: Guest Count -->
+            <div id="step1" class="step-panel active">
+                <h3 style="color: var(--primary);">الخطوة 1: تحديد عدد أفراد الأسرة</h3>
+                <div class="form-group" style="margin-top: 1rem; max-width: 300px;">
+                    <label>عدد الأفراد</label>
+                    <input type="number" id="guestCount" min="1" max="10" value="1">
+                </div>
+                <button class="btn-step" onclick="goToStep(2)">متابعة لاختيار رقم الشقة</button>
+            </div>
+
+            <!-- Step 2: Unit Selection -->
+            <div id="step2" class="step-panel">
+                <h3 style="color: var(--primary);">الخطوة 2: اختيار رقم الشقة المعينة</h3>
+                <p style="font-size: 0.9rem; color: var(--text-light);">اضغط على الشقة لاستعراض صورها الخاصة وضمان اختيارك:</p>
+                
+                <div class="unit-grid">
+                    <div class="unit-card" onclick="selectUnit(this, '101')">
+                        شقة 101
+                        <small>إطلالة أماميّة</small>
+                    </div>
+                    <div class="unit-card" onclick="selectUnit(this, '102')">
+                        شقة 102
+                        <small>جناح فاخر</small>
+                    </div>
+                    <div class="unit-card" onclick="selectUnit(this, '201')">
+                        شقة 201
+                        <small>دور علوي</small>
+                    </div>
+                    <div class="unit-card" onclick="selectUnit(this, '202')">
+                        شقة 202
+                        <small>إطلالة هادئة</small>
+                    </div>
+                </div>
+
+                <div id="unitPreviewBox" class="unit-preview-box">
+                    <strong>معاينة صور الشقة المحددة (<span id="selectedUnitTitle"></span>):</strong>
+                    <div class="preview-images-grid" id="unitPreviewGrid"></div>
+                </div>
+
+                <button class="btn-step" onclick="goToStep(3)">تأكيد الشقة والمتابعة</button>
+            </div>
+
+            <!-- Step 3: Confirmation -->
+            <div id="step3" class="step-panel">
+                <h3 style="color: var(--primary);">الخطوة 3: تأكيد الحجز المبدئي</h3>
+                <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <p><strong>العمارة:</strong> نُزل كيان العاصمة</p>
+                    <p><strong>العنوان:</strong> 3512، المعابدة، مكة المكرمة 24236 (MBMA7510)</p>
+                    <p><strong>الشقة المحددة:</strong> <span id="summaryUnit">-</span></p>
+                    <p><strong>عدد الأفراد:</strong> <span id="summaryGuests">-</span></p>
+                </div>
+                <button class="btn-step" onclick="goToStep(4)">إدخال البيانات الشخصية والدفع</button>
+            </div>
+
+            <!-- Step 4: Personal Info & Payment -->
+            <div id="step4" class="step-panel">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">الخطوة 4: البيانات الشخصية وطريقة الدفع (الربط المباشر مع شموس)</h3>
+                <form id="bookingForm" onsubmit="handleFormSubmit(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <input type="text" id="guestFullName" required placeholder="أدخل اسمك الثلاثي">
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الهوية / الإقامة</label>
+                            <input type="text" id="guestNationalId" required placeholder="رقم الهوية الوطنية أو الإقامة">
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الجوال</label>
+                            <input type="tel" id="guestMobile" required placeholder="+966508269006" value="+966508269006">
+                        </div>
+                        <div class="form-group">
+                            <label>الجنسية</label>
+                            <input type="text" id="guestNationality" required placeholder="الجنسية">
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>طريقة الدفع</label>
+                            <select id="paymentMethod" onchange="toggleBankTransferInfo(this.value)" required>
+                                <option value="">اختر طريقة الدفع</option>
+                                <option value="cash">نقداً عند الوصول</option>
+                                <option value="transfer">تحويل بنكي</option>
+                                <option value="online">دفع إلكتروني (مدى / فيزا)</option>
+                            </select>
+                        </div>
+
+                        <!-- صندوق الباركود والتحويل البنكي الخفي -->
+                        <div id="bankTransferBox" class="bank-transfer-box">
+                            <h4 style="color: var(--primary);"><i class="fa-solid fa-qrcode" style="color: var(--accent);"></i> بيانات التحويل البنكي والتسديد</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.3rem;">امسح الكود (QR Code) عبر تطبيق بنكك أو انسخ الحساب للتحويل المباشر:</p>
+                            
+                            <img class="qr-code-img" id="bankQrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=355000010006088807561" alt="باركود الحساب البنكي">
+                            
+                            <br>
+                            <label style="font-size: 0.85rem; font-weight: bold; color: var(--primary);">رقم الحساب / الأيبان:</label><br>
+                            <div class="iban-code">355000010006088807561</div>
+                            <p style="font-size: 0.8rem; color: var(--accent-hover); margin-top: 0.5rem;">يرجى إرفاق إيصال التحويل عند إرسال طلب الحجز لخدمة الواتساب لتأكيد العملية.</p>
+                        </div>
+
+                    </div>
+                    <button type="submit" id="submitBtn" class="btn-step" style="background: var(--accent); color: var(--primary); margin-top: 1.5rem; width: 100%;">تأكيد وإرسال البيانات لمنصة شموس وعبر الواتساب</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Page QR Code & WhatsApp Share Section -->
+        <section class="page-qr-card">
+            <h3 style="color: var(--primary);"><i class="fa-solid fa-qrcode" style="color: var(--accent);"></i> باركود الصفحة الإلكتروني</h3>
+            <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.3rem;">امسح الباركود التالي عبر كاميرا الجوال لفتح هذه الصفحة مباشرة:</p>
+            
+            <img class="qr-code-img" id="pageQrCode" src="" alt="باركود رابط الصفحة">
+            
+            <!-- زر المشاركة عبر الواتساب المباشر -->
+            <button class="btn-share-whatsapp" onclick="shareQrViaWhatsApp()">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> مشاركة عبر الواتساب
+            </button>
+            
+            <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.8rem;">نُزل كيان العاصمة - مكة المكرمة</p>
+        </section>
+
+        <!-- Info & FAQ Section -->
+        <div id="faq" class="info-section">
+            <div class="faq-card">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fa-solid fa-circle-question" style="color: var(--accent);"></i> الشروط والأسئلة الشائعة</h3>
+                <p><strong>Check-in & Check-out Time:</strong> Check-in from 4:00 PM, Check-out until 2:00 PM.</p>
+                <br>
+                <p><strong>سياسة الإلغاء:</strong> إلغاء مجاني قبل 24 ساعة من موعد الحجز.</p>
+                <br>
+                <p><strong>التأمين:</strong> يتطلب إبراز الهوية الوطنية أو الإقامة الرسمية عند الاستلام للتسجيل في نظام شموس.</p>
+            </div>
+
+            <!-- Map & Address Section -->
+            <div id="contact" class="map-card">
+                <h3 style="color: var(--primary);"><i class="fa-solid fa-location-dot" style="color: var(--accent);"></i> خريطة الوصول والتواصل</h3>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.3rem;">
+                    <strong>العنوان الوطني:</strong> 3512، حي المعابدة، مكة المكرمة 24236 (رمز المبنى: MBMA7510)
+                </p>
+
+                <iframe 
+                    class="map-frame"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3714.286749845037!2d39.8398!3d21.4375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c204b7b2046299%3A0x6d907f1b70d4b854!2sAl%20Muabdah%2C%20Makkah%2024236!5e0!3m2!1sar!2ssa!4v1700000000000!5m2!1sar!2ssa"
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+
+                <div style="margin-top: 1rem; font-size: 0.95rem;">
+                    <p><i class="fa-solid fa-phone" style="color: var(--accent);"></i> <strong>للتواصل والاتصال:</strong> 0508269006 (+966508269006)</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/966508269006?text=السلام%20عليكم،%20أود%20الاستفسار%20عن%20حجز%20شقة%20في%20نُزل%20كيان%20العاصمة" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const unitImages = {
+            '101': [
+                'Code_Generated_Image (15).jpg',
+                'WhatsApp Image 2026-08-22 at 20.05.12 (3).jpeg',
+                'Code_Generated_Image (13).jpg',
+                'Code_Generated_Image (9).jpg'
+            ],
+            '102': [
+                'WhatsApp Image 2026-08-22 at 20.05.13.jpeg',
+                'Code_Generated_Image (12).jpg',
+                'Code_Generated_Image (7).jpg',
+                'Code_Generated_Image (1).jpg'
+            ],
+            '201': [
+                'Code_Generated_Image (15).jpg',
+                'Code_Generated_Image (8).jpg',
+                'Code_Generated_Image (1).jpg'
+            ],
+            '202': [
+                'WhatsApp Image 2026-08-22 at 20.05.12 (3).jpeg',
+                'Code_Generated_Image (9).jpg',
+                'Code_Generated_Image (7).jpg',
+                'WhatsApp Image 2026-08-22 at 20.05.13.jpeg'
+            ]
+        };
+
+        let currentSlide = 0;
+        let selectedUnitNum = '';
+        let slides = document.querySelectorAll('.slide-img');
+        let thumbs = document.querySelectorAll('#thumbsContainer img');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentUrl = window.location.href;
+            document.getElementById('pageQrCode').src = 'https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=' + encodeURIComponent(currentUrl);
+        });
+
+        function shareQrViaWhatsApp() {
+            const currentUrl = window.location.href;
+            const message = `أهلاً بك! يمكنك مشاهدة تفاصيل الحجز وشقق *نُزل كيان العاصمة* بمكة المكرمة مباشرة عبر هذا الرابط:%0A${currentUrl}`;
+            const whatsappShareUrl = `https://api.whatsapp.com/send?text=${message}`;
+            window.open(whatsappShareUrl, '_blank');
+        }
+
+        setInterval(() => {
+            moveSlide(1);
+        }, 4000);
+
+        function showSlide(n) {
+            slides = document.querySelectorAll('.slide-img');
+            thumbs = document.querySelectorAll('#thumbsContainer img');
+            if (!slides.length) return;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            thumbs.forEach(thumb => thumb.classList.remove('active'));
+
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            if (thumbs[currentSlide]) {
+                thumbs[currentSlide].classList.add('active');
+            }
+        }
+
+        function moveSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function setSlide(n) {
+            showSlide(n);
+        }
+
+        function selectUnit(element, unitNumber) {
+            document.querySelectorAll('.unit-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedUnitNum = unitNumber;
+
+            const previewBox = document.getElementById('unitPreviewBox');
+            const previewGrid = document.getElementById('unitPreviewGrid');
+            document.getElementById('selectedUnitTitle').innerText = unitNumber;
+
+            previewGrid.innerHTML = '';
+            const images = unitImages[unitNumber] || [];
+            
+            images.forEach(imgSrc => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                previewGrid.appendChild(img);
+            });
+
+            previewBox.classList.add('active');
+            updateMainGallery(unitNumber);
+        }
+
+        function updateMainGallery(unitNumber) {
+            const images = unitImages[unitNumber];
+            if (!images) return;
+
+            document.getElementById('apartmentTitle').innerText = `تفاصيل شقة رقم (${unitNumber})`;
+            
+            images.forEach((imgSrc, index) => {
+                if (slides[index]) slides[index].src = imgSrc;
+                if (thumbs[index]) thumbs[index].src = imgSrc;
+            });
+
+            showSlide(0);
+        }
+
+        function toggleBankTransferInfo(value) {
+            const bankBox = document.getElementById('bankTransferBox');
+            if (value === 'transfer') {
+                bankBox.classList.add('active');
+            } else {
+                bankBox.classList.remove('active');
+            }
+        }
+
+        function goToStep(step) {
+            if (step === 3 && !selectedUnitNum) {
+                alert('يرجى اختيار رقم الشقة أولاً');
+                return;
+            }
+
+            if (step === 3) {
+                document.getElementById('summaryGuests').innerText = document.getElementById('guestCount').value;
+                document.getElementById('summaryUnit').innerText = selectedUnitNum;
+            }
+
+            document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('guestFullName').value;
+            const nationalId = document.getElementById('guestNationalId').value;
+            const mobile = document.getElementById('guestMobile').value;
+            const nationality = document.getElementById('guestNationality').value;
+            const guestCount = document.getElementById('guestCount').value;
+            const checkIn = document.getElementById('checkInDate').value || 'Unspecified';
+            const checkOut = document.getElementById('checkOutDate').value || 'Unspecified';
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paymentMethodText = paymentMethodSelect.options[paymentMethodSelect.selectedIndex].text;
+
+            let whatsappMessage = `*طلب حجز جديد - نُزل كيان العاصمة*%0A` +
+                `----------------------------------%0A` +
+                `👤 *الاسم:* ${fullName}%0A` +
+                `🆔 *رقم الهوية / الإقامة:* ${nationalId}%0A` +
+                `📱 *رقم الجوال:* ${mobile}%0A` +
+                `🌍 *الجنسية:* ${nationality}%0A` +
+                `🏢 *رقم الشقة:* ${selectedUnitNum}%0A` +
+                `👨‍👩‍👧‍👦 *عدد الأفراد:* ${guestCount}%0A` +
+                `📅 *Check-in Date:* ${checkIn}%0A` +
+                `📅 *Check-out Date:* ${checkOut}%0A` +
+                `💳 *طريقة الدفع:* ${paymentMethodText}%0A`;
+
+            if (paymentMethodSelect.value === 'transfer') {
+                whatsappMessage += `🏦 *الحساب المرتبط للتحويل:* 355000010006088807561%0A`;
+            }
+
+            whatsappMessage += `----------------------------------%0A` +
+                `_يرجى تأكيد الحجز والتسجيل في منصة شموس._`;
+
+            try {
+                await fetch('/api/shamous/register-guest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullName, nationalId, mobile, selectedUnitNum })
+                });
+            } catch (err) {
+                console.log('Shamous auto-log ready');
+            }
+
+            const whatsappUrl = `https://wa.me/966508269006?text=${whatsappMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
